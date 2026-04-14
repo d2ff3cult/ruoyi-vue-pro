@@ -8,6 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.NOT_IMPLEMENTED;
 
 /**
@@ -74,6 +78,17 @@ public class DefaultController {
     public CommonResult<Boolean> iot404() {
         return CommonResult.error(NOT_IMPLEMENTED.getCode(),
                 "[IoT 物联网 yudao-module-iot - 已禁用][参考 https://doc.iocoder.cn/iot/build/ 开启]");
+    }
+
+    /**
+     * AI 测试页面占位接口，避免命名空间误落到已禁用模块时影响联调。
+     */
+    @RequestMapping(value = { "/admin-api/ai-order/**" })
+    public CommonResult<Map<String, Object>> aiOrderPlaceholder() {
+        Map<String, Object> page = new HashMap<>();
+        page.put("total", 0);
+        page.put("list", Collections.emptyList());
+        return CommonResult.success(page);
     }
 
     /**
